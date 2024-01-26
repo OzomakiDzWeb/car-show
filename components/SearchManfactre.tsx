@@ -5,6 +5,8 @@ import { Combobox, Transition } from "@headlessui/react";
 import Image from "next/image";
 
 import React, { useState, Fragment } from "react";
+import { relative } from "path";
+import { Itim } from "next/font/google";
 
 const SearchManfactre = ({
   manufactre,
@@ -22,7 +24,7 @@ const SearchManfactre = ({
         );
   return (
     <div className="search-manufacturer">
-      <Combobox>
+      <Combobox value={manufactre} onChange={setManufactre}>
         <div className="relative w-full">
           <Combobox.Button className="absolute top-[14px]">
             <Image
@@ -46,13 +48,47 @@ const SearchManfactre = ({
             afterLeave={() => setqueri("")}
           >
             <Combobox.Options>
-              {filterManufactures.length === 0 && queri !== "" && (
+              {filterManufactures.length === 0 && queri !== "" ? (
                 <Combobox.Option
                   value={queri}
                   className="search-manufacturer__option"
                 >
-                    Creat '{queri}'
+                  Creat '{queri}'
                 </Combobox.Option>
+              ) : (
+                filterManufactures.map((itme) => (
+                  <Combobox.Option
+                    value={itme}
+                    key={itme}
+                    className={({ active }) =>
+                      `relative search-manufacturer__option ${
+                        active ? "bg-primary-blue text-white" : "text-gray-900"
+                      }`
+                    }
+                  >
+                    {({ selected, active }) => (
+                      <>
+                        <span
+                          className={`block truncate ${
+                            selected ? "font-medium" : "font-normal"
+                          }`}
+                        >
+                          {itme}
+                        </span>
+
+                        {selected ? (
+                          <span
+                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                              active
+                                ? "text-white"
+                                : "text-pribg-primary-purple"
+                            }`}
+                          ></span>
+                        ) : null}
+                      </>
+                    )}
+                  </Combobox.Option>
+                ))
               )}
             </Combobox.Options>
           </Transition>
