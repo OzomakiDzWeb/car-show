@@ -36,7 +36,7 @@ const SearchManfactre = ({
             />
           </Combobox.Button>
           <Combobox.Input
-            className="search-manufacturer-input"
+            className="search-manufacturer-input searchbar__input"
             placeholder="Volkswagen"
             displayValue={(manufactre: string) => manufactre}
             onChange={(e) => setqueri(e.target.value)}
